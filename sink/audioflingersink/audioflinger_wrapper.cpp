@@ -20,6 +20,7 @@
 #include <media/AudioTrack.h>
 #include <utils/Log.h>
 #include <AudioFlinger.h>
+#include <AudioSystem.h>
 #include <MediaPlayerInterface.h>
 #include <MediaPlayerService.h>
 #include "audioflinger_wrapper.h"
@@ -109,7 +110,7 @@ int audioflinger_device_set (AudioFlingerDeviceHandle handle,
     // bufferCount is not the number of internal buffer, but the internal
     // buffer size 
     status = AUDIO_FLINGER_DEVICE_TRACK(handle)->set(streamType, sampleRate, 
-        format, channelCount, bufferCount);
+        format, AudioSystem::CHANNEL_OUT_FRONT_LEFT|AudioSystem::CHANNEL_OUT_FRONT_RIGHT, bufferCount);
     GST_PLAYER_DEBUG("Set AudioTrack, status: %d, streamType: %d, sampleRate: %d, "
         "channelCount: %d, bufferCount: %d\n", status, streamType, sampleRate, 
         channelCount, bufferCount);
@@ -326,7 +327,7 @@ uint32_t audioflinger_device_sampleRate (AudioFlingerDeviceHandle handle)
   if (handle == NULL || AUDIO_FLINGER_DEVICE(handle)->init == false)
     return 0;
   if (AUDIO_FLINGER_DEVICE_TRACK(handle))  {
-    return (int)AUDIO_FLINGER_DEVICE_TRACK(handle)->sampleRate();
+    return (int)AUDIO_FLINGER_DEVICE_TRACK(handle)->getSampleRate();
   }
   else {
     // do nothing here, MediaPlayerBase::AudioSink doesn't provide sampleRate()

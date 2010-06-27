@@ -247,5 +247,10 @@ status_t GstPlayer::setLooping(int loop)
     return mGstPlayerPipeline->setLooping(loop) ?  OK : android::UNKNOWN_ERROR;
 }
 
+status_t GstPlayer::invoke(const Parcel& request, Parcel *reply)
+{
+    return OK;
+}
+
 }; // namespace android
 

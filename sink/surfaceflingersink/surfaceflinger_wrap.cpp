@@ -20,8 +20,8 @@
 #include <ui/ISurface.h>
 #include <ui/Surface.h>
 #include <ui/SurfaceComposerClient.h>
-#include <utils/MemoryBase.h>
-#include <utils/MemoryHeapBase.h>
+#include <binder/MemoryBase.h>
+#include <binder/MemoryHeapBase.h>
 #include <cutils/log.h>
 #include "surfaceflinger_wrap.h"
 #include <GstLog.h>
@@ -33,6 +33,7 @@ typedef struct
     sp<MemoryHeapBase> frame_heap;
     sp<ISurface> isurface;
     sp<Surface> surface;
+    sp<SurfaceControl> surface_control;
     int32_t hor_stride;
     int32_t ver_stride;
     uint32_t width;
@@ -121,7 +122,7 @@ int videoflinger_device_create_new_surface(VideoFlingerDevice* videodev)
     int width = (videodev->width) > 320 ? 320 : videodev->width;
     int height = (videodev->height) > 320 ? 320 : videodev->height;
 
-    videodev->surface = videoClient->createSurface(
+    videodev->surface_control = videoClient->createSurface(
             pid, 
             0, 
             width, 
@@ -138,7 +139,7 @@ int videoflinger_device_create_new_surface(VideoFlingerDevice* videodev)
 
     /* set Surface toppest z-order, this will bypass all isurface created 
      * in java side and make sure this surface displaied in toppest */
-    state =  videodev->surface->setLayer(INT_MAX);
+    state =  videodev->surface_control->setLayer(INT_MAX);
     if (state != NO_ERROR)
     {
         GST_PLAYER_INFO("videoSurface->setLayer(), state = %d", state);
@@ -147,8 +148,8 @@ int videoflinger_device_create_new_surface(VideoFlingerDevice* videodev)
     }
 
     /* show surface */
-    state =  videodev->surface->show();
-    state =  videodev->surface->setLayer(INT_MAX);
+    state =  videodev->surface_control->show();
+    state =  videodev->surface_control->setLayer(INT_MAX);
     if (state != NO_ERROR)
     {
         GST_PLAYER_INFO("videoSurface->show(), state = %d", state);

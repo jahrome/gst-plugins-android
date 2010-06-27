@@ -15,7 +15,8 @@ LOCAL_SHARED_LIBRARIES := \
     libgstbase-0.10         \
 	libgstvideo-0.10		\
     libcutils               \
-    libutils                \
+    libutils               \
+    libbinder                \
 	libui					\
 	libsurfaceflinger
 
@@ -68,7 +69,8 @@ LOCAL_SRC_FILES:= \
 	
 LOCAL_SHARED_LIBRARIES := \
     libcutils               \
-    libutils                \
+    libutils               \
+    libbinder                \
 	libui					\
 	libsurfaceflinger
 
