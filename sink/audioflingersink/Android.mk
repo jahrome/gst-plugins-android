@@ -43,7 +43,7 @@ LOCAL_C_INCLUDES := \
 	external/gst-plugins-android/servicegluelayer/gstaudioflinger \
 	external/gst-plugins-base/gst-libs/gst/audio  \
 	external/gst-plugins-base/gst-libs \
-	frameworks/base/libs/audioflinger \
+	frameworks/base/services/audioflinger \
 	frameworks/base/media/libmediaplayerservice \
 	frameworks/base/media/libmedia	\
 	frameworks/base/include/media
